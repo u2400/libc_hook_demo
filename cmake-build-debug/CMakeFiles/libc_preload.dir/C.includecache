@@ -1,0 +1,32 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/toor/CLionProjects/libc_preload/get_proc_inf.c
+time.h
+-
+stdio.h
+-
+string.h
+-
+sys/stat.h
+-
+asm/param.h
+-
+sys/sysinfo.h
+-
+get_proc_inf.h
+/home/toor/CLionProjects/libc_preload/get_proc_inf.h
+
+/home/toor/CLionProjects/libc_preload/get_proc_inf.h
+
+/home/toor/CLionProjects/libc_preload/main.c
+stdio.h
+-
+get_proc_inf.h
+/home/toor/CLionProjects/libc_preload/get_proc_inf.h
+
