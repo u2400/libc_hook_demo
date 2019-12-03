@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/toor/Documents/clion-2018.3.4/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /home/user/clion-2018.3.4/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /home/toor/Documents/clion-2018.3.4/bin/cmake/linux/bin/cmake -E remove -f
+RM = /home/user/clion-2018.3.4/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/toor/CLionProjects/libc_preload
+CMAKE_SOURCE_DIR = /home/user/Documents/libc_hook_demo
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/toor/CLionProjects/libc_preload/cmake-build-debug
+CMAKE_BINARY_DIR = /home/user/Documents/libc_hook_demo/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/libc_preload.dir/depend.make
@@ -59,29 +59,29 @@ include CMakeFiles/libc_preload.dir/flags.make
 
 CMakeFiles/libc_preload.dir/main.c.o: CMakeFiles/libc_preload.dir/flags.make
 CMakeFiles/libc_preload.dir/main.c.o: ../main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/toor/CLionProjects/libc_preload/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/libc_preload.dir/main.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/libc_preload.dir/main.c.o   -c /home/toor/CLionProjects/libc_preload/main.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/user/Documents/libc_hook_demo/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/libc_preload.dir/main.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/libc_preload.dir/main.c.o   -c /home/user/Documents/libc_hook_demo/main.c
 
 CMakeFiles/libc_preload.dir/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/libc_preload.dir/main.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/toor/CLionProjects/libc_preload/main.c > CMakeFiles/libc_preload.dir/main.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/user/Documents/libc_hook_demo/main.c > CMakeFiles/libc_preload.dir/main.c.i
 
 CMakeFiles/libc_preload.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/libc_preload.dir/main.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/toor/CLionProjects/libc_preload/main.c -o CMakeFiles/libc_preload.dir/main.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/user/Documents/libc_hook_demo/main.c -o CMakeFiles/libc_preload.dir/main.c.s
 
 CMakeFiles/libc_preload.dir/get_proc_inf.c.o: CMakeFiles/libc_preload.dir/flags.make
 CMakeFiles/libc_preload.dir/get_proc_inf.c.o: ../get_proc_inf.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/toor/CLionProjects/libc_preload/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/libc_preload.dir/get_proc_inf.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/libc_preload.dir/get_proc_inf.c.o   -c /home/toor/CLionProjects/libc_preload/get_proc_inf.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/user/Documents/libc_hook_demo/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/libc_preload.dir/get_proc_inf.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/libc_preload.dir/get_proc_inf.c.o   -c /home/user/Documents/libc_hook_demo/get_proc_inf.c
 
 CMakeFiles/libc_preload.dir/get_proc_inf.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/libc_preload.dir/get_proc_inf.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/toor/CLionProjects/libc_preload/get_proc_inf.c > CMakeFiles/libc_preload.dir/get_proc_inf.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/user/Documents/libc_hook_demo/get_proc_inf.c > CMakeFiles/libc_preload.dir/get_proc_inf.c.i
 
 CMakeFiles/libc_preload.dir/get_proc_inf.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/libc_preload.dir/get_proc_inf.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/toor/CLionProjects/libc_preload/get_proc_inf.c -o CMakeFiles/libc_preload.dir/get_proc_inf.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/user/Documents/libc_hook_demo/get_proc_inf.c -o CMakeFiles/libc_preload.dir/get_proc_inf.c.s
 
 # Object files for target libc_preload
 libc_preload_OBJECTS = \
@@ -95,7 +95,7 @@ libc_preload: CMakeFiles/libc_preload.dir/main.c.o
 libc_preload: CMakeFiles/libc_preload.dir/get_proc_inf.c.o
 libc_preload: CMakeFiles/libc_preload.dir/build.make
 libc_preload: CMakeFiles/libc_preload.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/toor/CLionProjects/libc_preload/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable libc_preload"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/user/Documents/libc_hook_demo/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking C executable libc_preload"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/libc_preload.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -108,6 +108,6 @@ CMakeFiles/libc_preload.dir/clean:
 .PHONY : CMakeFiles/libc_preload.dir/clean
 
 CMakeFiles/libc_preload.dir/depend:
-	cd /home/toor/CLionProjects/libc_preload/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/toor/CLionProjects/libc_preload /home/toor/CLionProjects/libc_preload /home/toor/CLionProjects/libc_preload/cmake-build-debug /home/toor/CLionProjects/libc_preload/cmake-build-debug /home/toor/CLionProjects/libc_preload/cmake-build-debug/CMakeFiles/libc_preload.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/user/Documents/libc_hook_demo/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/user/Documents/libc_hook_demo /home/user/Documents/libc_hook_demo /home/user/Documents/libc_hook_demo/cmake-build-debug /home/user/Documents/libc_hook_demo/cmake-build-debug /home/user/Documents/libc_hook_demo/cmake-build-debug/CMakeFiles/libc_preload.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/libc_preload.dir/depend
 

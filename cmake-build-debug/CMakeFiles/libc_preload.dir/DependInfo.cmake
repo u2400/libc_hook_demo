@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/toor/CLionProjects/libc_preload/get_proc_inf.c" "/home/toor/CLionProjects/libc_preload/cmake-build-debug/CMakeFiles/libc_preload.dir/get_proc_inf.c.o"
-  "/home/toor/CLionProjects/libc_preload/main.c" "/home/toor/CLionProjects/libc_preload/cmake-build-debug/CMakeFiles/libc_preload.dir/main.c.o"
+  "/home/user/Documents/libc_hook_demo/get_proc_inf.c" "/home/user/Documents/libc_hook_demo/cmake-build-debug/CMakeFiles/libc_preload.dir/get_proc_inf.c.o"
+  "/home/user/Documents/libc_hook_demo/main.c" "/home/user/Documents/libc_hook_demo/cmake-build-debug/CMakeFiles/libc_preload.dir/main.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 
