@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <zconf.h>
 #include "get_proc_inf.h"
 
 
@@ -11,5 +12,8 @@
 
 int main() {
     struct proc_inf inf = get_porc_inf();
+    char dir[PATH_MAX] = {0};
+//    int n = readlink("/proc/self/exe", dir, PATH_MAX);
+//    printf("%s\n", dir);
     printf("%lu %lu %lu", inf.sys_time, inf.start_time, inf.run_time);
 }

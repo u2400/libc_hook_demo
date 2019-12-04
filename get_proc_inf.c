@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include <asm/param.h>
 #include <sys/sysinfo.h>
+#include <zconf.h>
 #include "get_proc_inf.h"
 
 long unsigned int jiffies_to_unix_time(long unsigned int jiffies) {
@@ -72,6 +73,12 @@ char **get_all_env(void) {
     return p;
 }
 
+char *get_proc_path(int pid) {
+    char dir[PATH_MAX] = {0};
+    int n = readlink("/proc/self/exe", dir, PATH_MAX);
+    return dir;
+}
+
 struct proc_inf get_porc_inf(void) {
     struct proc_inf inf = {0};
     struct proc_stat stat = get_proc_stat(-1);
@@ -85,5 +92,7 @@ struct proc_inf get_porc_inf(void) {
     inf.sys_time = (long unsigned int)t;
     inf.start_time = jiffies_to_unix_time(stat.starttime);
     inf.run_time = inf.sys_time - inf.start_time;
+
+    inf.Path = get_proc_path();
     return inf;
 }

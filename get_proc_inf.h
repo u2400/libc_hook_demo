@@ -61,7 +61,7 @@ struct proc_stat {
 };
 
 struct proc_inf {
-    char* Path;
+    char* Path;     //ok
     char** ENV;     //ok
     char* Cmdline;
     char* pcmdline;
@@ -80,6 +80,7 @@ struct proc_inf {
     int Owner_gid;
     int Create_time;
     int Modify_time;
+    //ok
     long unsigned int  start_time; //proc run time
     long unsigned int run_time; //proc runed time
     long unsigned int sys_time;
