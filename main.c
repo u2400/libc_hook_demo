@@ -13,7 +13,5 @@
 int main() {
     struct proc_inf inf = get_porc_inf();
     char dir[PATH_MAX] = {0};
-//    int n = readlink("/proc/self/exe", dir, PATH_MAX);
-//    printf("%s\n", dir);
-    printf("%lu %lu %lu", inf.sys_time, inf.start_time, inf.run_time);
+    printf("%s %lu %lu", inf.Cmdline, inf.start_time, inf.run_time);
 }
