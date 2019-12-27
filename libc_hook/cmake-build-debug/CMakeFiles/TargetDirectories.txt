@@ -1,0 +1,3 @@
+/home/user/go/src/HIDS-agent/libc_hook/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/user/go/src/HIDS-agent/libc_hook/cmake-build-debug/CMakeFiles/libc_hook.dir
+/home/user/go/src/HIDS-agent/libc_hook/cmake-build-debug/CMakeFiles/edit_cache.dir

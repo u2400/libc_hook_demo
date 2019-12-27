@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/libc_preload.dir/main.c.o CMakeFiles/libc_preload.dir/get_proc_inf.c.o CMakeFiles/libc_preload.dir/util.c.o  -o libc_preload 

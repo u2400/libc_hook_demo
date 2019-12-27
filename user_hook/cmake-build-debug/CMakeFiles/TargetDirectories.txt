@@ -1,3 +1,0 @@
-/home/user/Documents/libc_hook_demo/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/user/Documents/libc_hook_demo/cmake-build-debug/CMakeFiles/libc_preload.dir
-/home/user/Documents/libc_hook_demo/cmake-build-debug/CMakeFiles/edit_cache.dir
