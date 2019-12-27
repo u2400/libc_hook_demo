@@ -1,1 +1,0 @@
-/usr/bin/cc -g   CMakeFiles/libc_hook.dir/main.c.o  -o libc_hook 
