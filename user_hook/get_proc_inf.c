@@ -88,7 +88,6 @@ char **get_all_env(void) {
     return p;
 }
 
-
 char *get_proc_path(int Pid) {
     char stat_path[20];
     char* pstat_path = stat_path;
