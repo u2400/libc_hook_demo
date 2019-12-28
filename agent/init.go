@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2019-12-26 20:33:42
+ * @LastEditTime : 2019-12-27 23:12:53
+ * @LastEditors  : Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /HIDS-agent/agent/init.go
+ */
 package agent
 
 /*
@@ -20,6 +28,11 @@ var inf_mem *[2]C.int
 var pid_chan chan int
 var data_mem_size int
 
+/**
+ * @description: 初始化agent, 包括创建共享内存, 启动数据获取和数据处理进程
+ * @param {type} 
+ * @return: 
+ */
 func Init() {
 	data_mem_size = C.data_mem_size
 	wait_group := new(sync.WaitGroup)
@@ -39,20 +52,23 @@ func Init() {
 	pid_chan = make(chan int, data_mem_size)
 	data_mem = (*[200]C.int)(pid_ptr)
 
-	/*
-	inf_mem[0] singal
-	inf_mem[1] free_point
-	*/
+	//inf_mem[0] singal
+	//inf_mem[1] free_point
 	inf_mem = (*[2]C.int)(inf)
 	inf_mem[0] = C.int(0)
 	inf_mem[1] = C.int(0)
-	go data_checker()
+	go data_setter()
 	go data_getter()
 
 	wait_group.Wait()
 }
 
-func data_checker() {
+/**
+ * @description: 轮询共享内存, 当写标识为为1时, 读取共享内存的全部数据, 放入管道中, 并将写标志位制0
+ * @param void
+ * @return: void
+ */
+func data_setter() {
 	for {
 		if inf_mem[0] > 0 {
 			for i := (inf_mem[1] - 1); i >= 0; i-- {
@@ -66,6 +82,11 @@ func data_checker() {
 	}
 }
 
+/**
+ * @description: 获取数据并对数据做相应的处理
+ * @param void
+ * @return: void
+ */
 func data_getter() {
 	for {
 		Pid := <- pid_chan
@@ -73,6 +94,11 @@ func data_getter() {
 	}
 }
 
+/**
+ * @description: 传入内存共享的名字和大小, 返回新建的或打开的内存共享区域.
+ * @param name string, size int
+ * @return: unsafe.Pointer,int
+ */
 func new_share_mem(name string, size int) (unsafe.Pointer,int) {
 	var ptr unsafe.Pointer
 	var err0, err1 error
