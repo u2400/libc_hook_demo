@@ -14,6 +14,7 @@
 #include <time.h>
 #include "get_proc_inf.h"
 #include "util.h"
+#include "util.c"
 
 //获取指定Pid进程的/proc/self/stat
 struct proc_stat get_proc_stat(int Pid) {
@@ -65,8 +66,7 @@ char *get_proc_env(int Pid) {
 char *get_proc_path(int Pid) {
     char stat_path[20];
     char* pstat_path = stat_path;
-    char dir[PATH_MAX] = {0};
-    char* pdir = dir;
+    char* dir = (char *)calloc((size_t)PATH_MAX, '\0');
     if (Pid != -1) {
         sprintf(stat_path, "/proc/%d/exe", Pid);
     } else {
@@ -74,7 +74,7 @@ char *get_proc_path(int Pid) {
     }
 
     readlink(pstat_path, dir, PATH_MAX);
-    return pdir;
+    return dir;
 }
 
 char* get_proc_cmdline(int Pid) {
@@ -168,4 +168,3 @@ struct proc_inf get_proc_inf(int Pid) {
     inf.fd = get_proc_fd(inf.pid);
     return inf;
 }
-

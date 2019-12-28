@@ -1,11 +1,9 @@
 /*
- * @Author: your name
  * @Date: 2019-12-26 20:33:42
- * @LastEditTime : 2019-12-27 23:12:53
- * @LastEditors  : Please set LastEditors
- * @Description: In User Settings Edit
- * @FilePath: /HIDS-agent/agent/init.go
+ * @LastEditors  : u2400
+ * @LastEditTime : 2019-12-27 23:38:44
  */
+
 package agent
 
 /*
@@ -30,8 +28,8 @@ var data_mem_size int
 
 /**
  * @description: 初始化agent, 包括创建共享内存, 启动数据获取和数据处理进程
- * @param {type} 
- * @return: 
+ * @param void
+ * @return: void
  */
 func Init() {
 	data_mem_size = C.data_mem_size
@@ -52,8 +50,8 @@ func Init() {
 	pid_chan = make(chan int, data_mem_size)
 	data_mem = (*[200]C.int)(pid_ptr)
 
-	//inf_mem[0] singal
-	//inf_mem[1] free_point
+	//inf_mem[0] 写标志位, 当生产者(hook)对共享内存写入数据时会将该位置1
+	//inf_mem[1] 共享内存采用栈的方式进行管理, 该位指向当前空闲内存的索引
 	inf_mem = (*[2]C.int)(inf)
 	inf_mem[0] = C.int(0)
 	inf_mem[1] = C.int(0)

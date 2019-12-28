@@ -1,3 +1,8 @@
+/*
+ * @Date: 2019-12-26 04:27:58
+ * @LastEditors: u2400
+ * @LastEditTime: 2019-12-28 04:01:42
+ */
 //
 // Created by toor on 19-11-16.
 //
@@ -6,12 +11,12 @@
 #define GET_PROC_INF_H
 
 struct proc_stat {
-    int pid;
+    int pid; //0
     char* comm;
     char state;
-    int ppid;
-    int pgid;
-    int session;
+    int ppid; //3
+    int pgid; //4
+    int session; //5
     int tty_nr;
     int tpgid;
     unsigned int flags;
