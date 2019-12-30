@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-28 02:04:56
  * @LastEditors  : u2400
- * @LastEditTime : 2019-12-28 06:03:49
+ * @LastEditTime : 2019-12-30 04:46:28
  */
 package Go_util
 
@@ -13,102 +13,108 @@ package Go_util
 import "C"
 import (
 	"fmt"
-	"io/ioutil"
 	"strings"
-	"strconv"
+	"os"
 )
 
-type proc_inf struct{
+type proc_inf struct {
     Path string
-    ENV string
+    ENV []string
     Cmdline string
-    pcmdline string
-    ppath string
+    Pcmdline string
+    PPath string
     name string
-	pid int
-	ppid int
+	Pid int
+	PPid int
 	pgid int
 	uid int
 	Euid int
 	Gid int
-	egid int
+	Egid int
 	sid int
-	mode int
+	mode string
 	time int
     Modify_time int64
 	start_time int64
     run_time int64
     sys_time int64
-    fd string
+    fd []string
 };
 
 var inf proc_inf
 
-func format_proc_path(path string, Pid int) string {
-	var f_path string
-	S_pid := fmt.Sprintf("%d", Pid)
-	if Pid == -1 {
-		f_path = fmt.Sprintf(path, "self")
-	} else {
-		f_path = fmt.Sprintf(path, S_pid)
-	}
-	return f_path;
-}
-
 func Get_proc_inf(Pid int) proc_inf {
 	inf = proc_inf{}
 	fmt.Println(Pid)
-	get_proc_stat(Pid)
-	get_proc_cmdline(Pid)
+	inf.Pid = Pid
+	s_stat, stat := get_proc_status(Pid)
+	inf.PPid = stat[0]
+	inf.uid = stat[1]
+	inf.Euid = stat[2]
+	inf.Gid = stat[3]
+	inf.Egid = stat[4]
+	inf.name = s_stat[0]
+	inf.mode = s_stat[1]
+
+	cmdline := get_proc_cmdline(Pid)
+	pcmdline := get_proc_cmdline(inf.PPid)
+	inf.Cmdline = cmdline
+	inf.Pcmdline = pcmdline
+
+	path := get_proc_path(Pid)
+	ppath := get_proc_path(Pid)
+	inf.Path = path
+	inf.PPath = ppath
+
+	env := get_proc_env(Pid)
+	inf.ENV = env
 	return inf
 }
 
-func get_proc_stat(Pid int) {
-	cont, err := ioutil.ReadFile(format_proc_path("/proc/%s/stat", Pid))
-	if err != nil {
-		panic(err)
-	}
-	content := string(cont)
-	stat := strings.Split(content, " ")
-	
-	pid, err := strconv.Atoi(stat[0])
-	if err != nil {
-		panic(err)
-	}
-
-	ppid, err := strconv.Atoi(stat[3])
-	if err != nil {
-		panic(err)
-	}
-
-	pgid, err := strconv.Atoi(stat[4])
-	if err != nil {
-		panic(err)
-	}
-
-	sid, err := strconv.Atoi(stat[5])
-	if err != nil {
-		panic(err)
-	}
-
-	inf.pid = pid
-	inf.ppid = ppid
-	inf.pgid = pgid
-	inf.sid = sid
-}
-
-func get_proc_cmdline(Pid int) {
+func get_proc_cmdline(Pid int) string {
 	path := fmt.Sprintf("/proc/%d/cmdline", Pid)
-	
-	cont, err := ioutil.ReadFile(path)
-	if err != nil {
-		panic(err)
-	}
-
-	cmdline := string(cont)
-	inf.Cmdline = cmdline
+	cmdline := Read_file_to_string(path)
+	return cmdline
 }
 
-func get_proc_path(Pid int) {
+func get_proc_path(Pid int) string {
+	path := fmt.Sprintf("/proc/%d/exe", Pid)
 	
+	proc_path, err := os.Readlink(path)
+	if err != nil {
+		Error(err)
+	}
+	return proc_path
+}
+
+func get_proc_env(Pid int) []string {
+	path := fmt.Sprintf("/proc/%d/environ", Pid)
+	content := Read_file_to_string(path)
+	env_arr := strings.Split(content, "\u0000")
+	return env_arr
+}
+
+func get_proc_status(Pid int) ([]string, []int) {
+	path := fmt.Sprintf("/proc/%d/status", Pid)
+	content := Read_file_to_string(path)
+
+	arr := strings.Split(content, "\n")
+	arr_uid := strings.Split(arr[8], "	")
+	uid := String_to_int(arr_uid[1])
+	Euid := String_to_int(arr_uid[2])
+
+	arr_gid := strings.Split(arr[9], "	")
+	Gid := String_to_int(arr_gid[1])
+	Egid := String_to_int(arr_gid[2])
+
+	arr_PPid := strings.Split(arr[6], "	")
+	ppid := String_to_int(arr_PPid[1])
+
+	arr_name := strings.Split(arr[0], "	")
+	name := arr_name[1]
+	
+	arr_mask := strings.Split(arr[1], "	")
+	mask := arr_mask[1]
+
+	return []string{name, mask}, []int{ppid, uid, Euid, Gid, Egid}
 }
