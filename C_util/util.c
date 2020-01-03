@@ -2,7 +2,6 @@
 // Created by user on 12/17/19.
 //
 
-#include "util.h"
 #include "../config.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,8 +11,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/mman.h>
-
-#define FILE_MODE (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
 
 long unsigned int jiffies_to_unix_time(long unsigned int jiffies) {
     struct sysinfo info;
@@ -96,8 +93,7 @@ void error(char *mes) {
 }
 
 void *new_share_mem(char *name, size_t size) {
-    shm_unlink(name);
-    int f = shm_open(name, O_RDWR|O_CREAT|O_TRUNC, 0777);
+    int f = shm_open(name, O_RDWR|O_CREAT, 0);
     ftruncate(f, size);
 
     void* ptr = mmap(NULL, size, PROT_READ|PROT_WRITE, MAP_SHARED, f, 0);
@@ -108,13 +104,17 @@ void *new_share_mem(char *name, size_t size) {
     return ptr;
 }
 
+void *free_share_mem(char *name) {
+    shm_unlink(name);
+}
+
 void *open_share_mem(char *name, size_t size) {
-    int f = shm_open(name, O_RDWR, FILE_MODE);
+    int f = shm_open(name, O_RDWR, 0);
     void* ptr = mmap(NULL, size, PROT_READ|PROT_WRITE, MAP_SHARED, f, 0);
     close(f);
 
     if (ptr == NULL) {
-        printf("open share mem errror");
+        printf("open share mem error");
     }
     return ptr;
 }

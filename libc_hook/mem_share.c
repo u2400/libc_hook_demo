@@ -1,5 +1,9 @@
+/*
+ * @Date: 2019-12-27 09:54:53
+ * @LastEditors: u2400
+ * @LastEditTime: 2020-01-01 22:54:07
+ */
 #include "../C_util/util.h"
-#include "../C_util/util.c"
 #include "../config.h"
 #include "mem_share.h"
 

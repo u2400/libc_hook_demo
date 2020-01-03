@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-26 20:33:42
  * @LastEditors  : u2400
- * @LastEditTime : 2019-12-27 23:38:44
+ * @LastEditTime : 2020-01-02 12:16:56
  */
 
 package agent
@@ -10,15 +10,19 @@ package agent
 #cgo linux LDFLAGS: -lrt
 #include "../C_util/get_proc_inf.h"
 #include "../C_util/util.h"
-#include "../C_util/util.c"
 #include "../config.h"
 */
 import "C"
 import (
 	"fmt"
-	"sync"
+	// "sync"
 	"time"
 	"unsafe"
+	"HIDS-agent/Go_util"
+	"encoding/json"
+	"syscall"
+	"os/signal"
+	"os"
 )
 
 var data_mem *[200]C.int
@@ -33,19 +37,21 @@ var data_mem_size int
  */
 func Init() {
 	data_mem_size = C.data_mem_size
-	wait_group := new(sync.WaitGroup)
-	wait_group.Add(1)
+	// wait_group := new(sync.WaitGroup)
+	// wait_group.Add(1)
 	pid_ptr, err := new_share_mem(C.share_mem_name, C.int_size * data_mem_size)
 	if (err == -1) {
 		fmt.Println("new share mem error!")
 		return
 	}
+	defer free_share_mem(C.share_mem_name)
 
 	inf, err := new_share_mem(C.share_mem_inf_name, C.int_size * 3)
 	if (err == -1) {
-		fmt.Println("new share mem error!")
+		fmt.Println("new share mem inf error!")
 		return
 	}
+	defer free_share_mem(C.share_mem_inf_name)
 
 	pid_chan = make(chan int, data_mem_size)
 	data_mem = (*[200]C.int)(pid_ptr)
@@ -58,7 +64,9 @@ func Init() {
 	go data_setter()
 	go data_getter()
 
-	wait_group.Wait()
+	fmt.Println("agent is running!")
+	wait_exit()
+	// wait_group.Wait()
 }
 
 /**
@@ -76,19 +84,24 @@ func data_setter() {
 			inf_mem[0] = 0
 			inf_mem[1] = 0
 		}
-		time.Sleep(10000000);
+		time.Sleep(100000);
 	}
 }
 
 /**
- * @description: 获取数据并对数据做相应的处理
+ * @description: 获取Pid并对获取Pid的进程数据进行补全
  * @param void
  * @return: void
  */
 func data_getter() {
 	for {
 		Pid := <- pid_chan
-		fmt.Println(Pid)
+		inf := Go_util.Get_proc_inf(Pid)
+		json_inf, err := json.Marshal(inf)
+		if err != nil {
+			Go_util.Catch_error(err)
+		}
+		fmt.Println(string(json_inf))
 	}
 }
 
@@ -104,10 +117,25 @@ func new_share_mem(name string, size int) (unsafe.Pointer,int) {
 	if err0 != nil {
 		ptr, err1 = C.open_share_mem(C.CString(name), C.ulong(size))
 		if err1 != nil {
-			fmt.Println(err0)
-			fmt.Println(err1)
+			fmt.Println("err0:",err0)
+			fmt.Println("err1:",err1)
+			return nil,-1
 		}
-		return nil,-1
 	}
+	os.Chmod( "/dev/shm/"+ name, 0666)
 	return ptr,0
 }
+
+func free_share_mem(name string) {
+	fmt.Println("agent log: free mem share")
+	C.free_share_mem(C.CString(name))
+}
+
+func wait_exit() {
+	c := make(chan os.Signal)
+	signal.Notify(c, os.Interrupt, os.Kill, syscall.SIGUSR1, syscall.SIGUSR2)
+	_ = <-c
+	fmt.Println("proc exit!")
+	C.free_share_mem(C.CString(C.share_mem_name))
+	C.free_share_mem(C.CString(C.share_mem_inf_name))
+} 

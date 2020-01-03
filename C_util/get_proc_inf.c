@@ -12,9 +12,6 @@
 #include <malloc.h>
 #include <libnet.h>
 #include <time.h>
-#include "get_proc_inf.h"
-#include "util.h"
-#include "util.c"
 
 //获取指定Pid进程的/proc/self/stat
 struct proc_stat get_proc_stat(int Pid) {
