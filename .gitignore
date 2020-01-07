@@ -4,7 +4,7 @@ kernal_hook/*.cmd
 kernal_hook/*.ko
 kernal_hook/*.o
 kernal_hook/*.symvers
-kernal_hook/.tmp_versions
+kernal_hook/.*
 kernal_hook/*.txt
 kernal_hook/*.mod.c
 kernal_hook/*.order

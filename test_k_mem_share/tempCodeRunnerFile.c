@@ -1,0 +1,1 @@
+open_k_share_mem
