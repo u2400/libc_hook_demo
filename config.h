@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-26 19:30:56
  * @LastEditors  : u2400
- * @LastEditTime : 2020-01-06 02:25:42
+ * @LastEditTime : 2020-01-25 03:55:17
  */
 #ifndef CONFIG_H
 #define CONFIG_H
@@ -12,6 +12,7 @@
 #define data_mem_size 200
 #define k_mem_size 4096
 #define int_size 4
+#define node_size 4
 #define MAX_PAYLOAD 1024
 #define MAX_MSGSIZE 1024
 #define NETLINK_TEST 20

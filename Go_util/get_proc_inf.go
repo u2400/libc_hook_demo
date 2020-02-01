@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-28 02:04:56
  * @LastEditors  : u2400
- * @LastEditTime : 2020-01-02 00:41:42
+ * @LastEditTime : 2020-01-25 01:31:38
  */
 package Go_util
 
@@ -11,7 +11,7 @@ import (
 	"os"
 )
 
-type proc_inf struct {
+type Proc_inf struct {
     Path string
     ENV []string
     Cmdline string
@@ -35,16 +35,16 @@ type proc_inf struct {
     fd map[string]string
 };
 
-var inf proc_inf
+var inf Proc_inf
 
-func Get_proc_inf(Pid int) proc_inf {
+func Get_Proc_inf(Pid int) Proc_inf {
 
 	defer func () {
 		if err := recover(); err != nil {
 			Catch_error(err.(error))
 		}
 	}()
-	inf = proc_inf{}
+	inf = Proc_inf{}
 	fmt.Println(Pid)
 	inf.Pid = Pid
 	s_stat, stat := get_proc_status(Pid)

@@ -1,10 +1,10 @@
 .vscode
 libc_hook/main
-kernal_hook/*.cmd
-kernal_hook/*.ko
-kernal_hook/*.o
-kernal_hook/*.symvers
+*.cmd
+*.ko
+*.o
+*.symvers
 kernal_hook/.*
 kernal_hook/*.txt
-kernal_hook/*.mod.c
-kernal_hook/*.order
+*.mod.c
+*.order

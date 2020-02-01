@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-26 20:33:42
  * @LastEditors  : u2400
- * @LastEditTime : 2020-01-02 12:16:56
+ * @LastEditTime : 2020-01-25 03:55:31
  */
 
 package agent
@@ -15,23 +15,22 @@ package agent
 import "C"
 import (
 	"fmt"
-	// "sync"
 	"time"
 	"unsafe"
 	"HIDS-agent/Go_util"
-	"encoding/json"
+	// "encoding/json"
 	"syscall"
 	"os/signal"
 	"os"
 )
 
-var data_mem *[200]C.int
+var data_mem *[200](* C.proc_inf)
 var inf_mem *[2]C.int
-var pid_chan chan int
+var inf_chan chan Go_util.Proc_inf
 var data_mem_size int
 
 /**
- * @description: 初始化agent, 包括创建共享内存, 启动数据获取和数据处理进程
+ * @description: 初始化agent, 包括创建共享内存, 启动数据获取进程和数据处理进程
  * @param void
  * @return: void
  */
@@ -39,7 +38,7 @@ func Init() {
 	data_mem_size = C.data_mem_size
 	// wait_group := new(sync.WaitGroup)
 	// wait_group.Add(1)
-	pid_ptr, err := new_share_mem(C.share_mem_name, C.int_size * data_mem_size)
+	inf_ptr, err := new_share_mem(C.share_mem_name, C.node_size * data_mem_size)
 	if (err == -1) {
 		fmt.Println("new share mem error!")
 		return
@@ -53,8 +52,8 @@ func Init() {
 	}
 	defer free_share_mem(C.share_mem_inf_name)
 
-	pid_chan = make(chan int, data_mem_size)
-	data_mem = (*[200]C.int)(pid_ptr)
+	inf_chan = make(chan Go_util.Proc_inf, data_mem_size)
+	data_mem = (*[200](* C.proc_inf))(inf_ptr)
 
 	//inf_mem[0] 写标志位, 当生产者(hook)对共享内存写入数据时会将该位置1
 	//inf_mem[1] 共享内存采用栈的方式进行管理, 该位指向当前空闲内存的索引
@@ -62,7 +61,7 @@ func Init() {
 	inf_mem[0] = C.int(0)
 	inf_mem[1] = C.int(0)
 	go data_setter()
-	go data_getter()
+	// go data_getter()
 
 	fmt.Println("agent is running!")
 	wait_exit()
@@ -78,8 +77,11 @@ func data_setter() {
 	for {
 		if inf_mem[0] > 0 {
 			for i := (inf_mem[1] - 1); i >= 0; i-- {
-				pid := data_mem[i]
-				pid_chan <- int(pid)
+				go_inf := Go_util.Proc_inf{}
+				C_inf := data_mem[i]
+				go_inf.Path = C.GoString(C_inf.Path)
+
+				inf_chan <- go_inf
 			}
 			inf_mem[0] = 0
 			inf_mem[1] = 0
@@ -93,17 +95,17 @@ func data_setter() {
  * @param void
  * @return: void
  */
-func data_getter() {
-	for {
-		Pid := <- pid_chan
-		inf := Go_util.Get_proc_inf(Pid)
-		json_inf, err := json.Marshal(inf)
-		if err != nil {
-			Go_util.Catch_error(err)
-		}
-		fmt.Println(string(json_inf))
-	}
-}
+// func data_getter() {
+// 	for {
+// 		Pid := <- inf_chan
+// 		inf := Go_util.Get_proc_inf(Pid)
+// 		json_inf, err := json.Marshal(inf)
+// 		if err != nil {
+// 			Go_util.Catch_error(err)
+// 		}
+// 		fmt.Println(string(json_inf))
+// 	}
+// }
 
 /**
  * @description: 传入内存共享的名字和大小, 返回新建的或打开的内存共享区域.

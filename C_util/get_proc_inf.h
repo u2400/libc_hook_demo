@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-26 04:27:58
- * @LastEditors: u2400
- * @LastEditTime: 2019-12-28 04:01:42
+ * @LastEditors  : u2400
+ * @LastEditTime : 2020-01-25 03:03:56
  */
 //
 // Created by toor on 19-11-16.
@@ -65,7 +65,7 @@ struct proc_stat {
     int exit_code;
 };
 
-struct proc_inf {
+typedef struct {
     char* Path;
     char* ENV;
     char* Cmdline;
@@ -89,7 +89,7 @@ struct proc_inf {
     long unsigned int run_time; //proc runed time
     long unsigned int sys_time;
     char** fd;
-};
+} proc_inf;
 
 struct proc_stat get_proc_stat(int Pid);
 struct proc_inf get_proc_inf(int Pid);
