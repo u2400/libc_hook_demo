@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-28 02:04:56
  * @LastEditors  : u2400
- * @LastEditTime : 2020-01-25 01:31:38
+ * @LastEditTime : 2020-02-01 03:01:24
  */
 package Go_util
 
@@ -17,22 +17,25 @@ type Proc_inf struct {
     Cmdline string
     Pcmdline string
     PPath string
-    name string
+	Name string
+	Mode string
 	Pid int
 	PPid int
-	pgid int
-	uid int
+	Pgid int
+	Uid int
 	Euid int
 	Gid int
 	Egid int
-	sid int
-	mode string
-	time int
+	Sid int
+	// Time int
+	Owner_uid int
+	Owner_gid int
+	Create_time int
     Modify_time int64
-	start_time int64
-    run_time int64
-    sys_time int64
-    fd map[string]string
+	Start_time int64
+    Run_time int64
+    Sys_time int64
+    Fd map[int]string
 };
 
 var inf Proc_inf
@@ -49,12 +52,12 @@ func Get_Proc_inf(Pid int) Proc_inf {
 	inf.Pid = Pid
 	s_stat, stat := get_proc_status(Pid)
 	inf.PPid = stat[0]
-	inf.uid = stat[1]
+	inf.Uid = stat[1]
 	inf.Euid = stat[2]
 	inf.Gid = stat[3]
 	inf.Egid = stat[4]
-	inf.name = s_stat[0]
-	inf.mode = s_stat[1]
+	inf.Name = s_stat[0]
+	inf.Mode = s_stat[1]
 
 	cmdline := get_proc_cmdline(Pid)
 	pcmdline := get_proc_cmdline(inf.PPid)
@@ -75,7 +78,7 @@ func Get_Proc_inf(Pid int) Proc_inf {
 	env := get_proc_env(Pid)
 	inf.ENV = env
 	
-	inf.fd = get_proc_fd(Pid)
+	// inf.Fd = get_proc_fd(Pid)
 	return inf
 }		
 

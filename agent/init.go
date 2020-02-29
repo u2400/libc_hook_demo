@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-26 20:33:42
  * @LastEditors  : u2400
- * @LastEditTime : 2020-01-25 03:55:31
+ * @LastEditTime : 2020-02-02 20:58:21
  */
 
 package agent
@@ -18,7 +18,6 @@ import (
 	"time"
 	"unsafe"
 	"HIDS-agent/Go_util"
-	// "encoding/json"
 	"syscall"
 	"os/signal"
 	"os"
@@ -77,10 +76,8 @@ func data_setter() {
 	for {
 		if inf_mem[0] > 0 {
 			for i := (inf_mem[1] - 1); i >= 0; i-- {
-				go_inf := Go_util.Proc_inf{}
 				C_inf := data_mem[i]
-				go_inf.Path = C.GoString(C_inf.Path)
-
+				go_inf := cs_to_gs(C_inf)
 				inf_chan <- go_inf
 			}
 			inf_mem[0] = 0
@@ -88,6 +85,33 @@ func data_setter() {
 		}
 		time.Sleep(100000);
 	}
+}
+
+func cs_to_gs(cs *C.proc_inf) Go_util.Proc_inf {
+	gs := Go_util.Proc_inf{}
+	gs.Path = C.GoString(cs.Path)
+	// gs.ENV = C.GoString(cs.ENV)
+	gs.Cmdline = C.GoString(cs.Cmdline)
+	gs.Pcmdline = C.GoString(cs.Pcmdline)
+	gs.PPath = C.GoString(cs.PPath)
+	gs.Name = C.GoString(cs.Name)
+	gs.Pid = int(cs.Pid)
+	gs.PPid = int(cs.PPid)
+	gs.Pgid = int(cs.Pgid)
+	gs.Uid = int(cs.Uid)
+	gs.Euid = int(cs.Euid)
+	gs.Gid = int(cs.Gid)
+	gs.Egid = int(cs.Egid)
+	gs.Sid = int(cs.Sid)
+	gs.Owner_uid = int(cs.Owner_uid)
+	gs.Owner_gid = int(cs.Owner_gid)
+	gs.Create_time = int(cs.Create_time)
+	gs.Modify_time = int64(cs.Modify_time)
+	gs.Start_time = int64(cs.Start_time)
+	gs.Run_time = int64(cs.Run_time)
+	gs.Sys_time = int64(cs.Sys_time)
+	// Fd = 
+	return gs
 }
 
 /**

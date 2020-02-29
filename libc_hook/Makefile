@@ -1,4 +1,4 @@
-obj-m   := core.o
+obj-m   := kp.o
 
 default:
 	gcc main.c -o main -lrt && ./main

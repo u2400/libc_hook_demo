@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-26 04:27:58
  * @LastEditors  : u2400
- * @LastEditTime : 2020-01-25 03:03:56
+ * @LastEditTime : 2020-02-01 02:57:04
  */
 //
 // Created by toor on 19-11-16.
@@ -9,6 +9,7 @@
 
 #ifndef GET_PROC_INF_H
 #define GET_PROC_INF_H
+#include "../config.h"
 
 struct proc_stat {
     int pid; //0
@@ -64,32 +65,6 @@ struct proc_stat {
     long unsigned int env_end;
     int exit_code;
 };
-
-typedef struct {
-    char* Path;
-    char* ENV;
-    char* Cmdline;
-    char* pcmdline;
-    char* ppath;
-    char* name;
-    int pid;
-    int ppid;
-    int pgid;
-    int uid;
-    int Euid;
-    int Gid;
-    int egid;
-    int sid;
-    int mode;
-    int Owner_uid;
-    int Owner_gid;
-    int Create_time;
-    long Modify_time;
-    long unsigned int  start_time; //proc run time
-    long unsigned int run_time; //proc runed time
-    long unsigned int sys_time;
-    char** fd;
-} proc_inf;
 
 struct proc_stat get_proc_stat(int Pid);
 struct proc_inf get_proc_inf(int Pid);

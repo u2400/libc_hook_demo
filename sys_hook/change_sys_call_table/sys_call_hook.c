@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-01-07 05:12:02
  * @LastEditors  : u2400
- * @LastEditTime : 2020-01-14 04:55:31
+ * @LastEditTime : 2020-02-02 21:32:59
  */
 #include <linux/kernel.h>
 #include <linux/module.h>
@@ -48,7 +48,6 @@ struct sock *syshook_nl_sk = NULL;
 origin_execvecall orig_stub_execve;
 
 unsigned long ** find_sys_call_table(void) {
-	/* Lookup address for sys_call_table and set sct_address to it */
 	return (unsigned long **)kallsyms_lookup_name("sys_call_table");
 }
 

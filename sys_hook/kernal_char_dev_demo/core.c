@@ -1,7 +1,7 @@
 /*
  * @Date: 2020-01-03 00:38:31
  * @LastEditors  : u2400
- * @LastEditTime : 2020-01-06 11:52:44
+ * @LastEditTime : 2020-02-02 21:25:16
  */
 #include <linux/init.h>
 #include <linux/module.h>
@@ -40,7 +40,7 @@ static struct file_operations fops = {
     .write = dev_write,
     .release = dev_release,
 };
- 
+
 extern struct net init_net;
 void sendnlmsg(char *message) {
     struct sk_buff *skb;
